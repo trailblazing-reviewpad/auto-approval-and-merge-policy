@@ -6,7 +6,7 @@ groups:
     spec: '["build"]'
 
   - name: low-risk-filepaths
-    spec: '["aux/.*", ".*\\.md", ".*\\.txt"]'
+    spec: '["aux/.*", ".*.md", ".*.txt"]'
 
   - name: principal-engineers
     spec: '["marcelosousa"]'
