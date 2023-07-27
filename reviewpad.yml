@@ -17,7 +17,7 @@ workflows:
       # - if: '$isElementOf($author(), $group("principal-engineers"))'
       #   then: $approve("This PR is automatically approved as it was created by a principal engineer.")
 
-      - if: '$all($filesPath(), ($fp: String => $any($group("low-risk-filepaths"), ($pat: String => $matchString($pat, $fp)))))'
+      - if: '$all($filesPath(), ($fp: String => $any($group("low-risk-filepaths"), ($pat: String => $pat == $fp))))'
         then: $approve("This PR has been automatically approved as it only modifies low risk files.")
 
       # - if: $isElementOf($author(), $group("trusted-bots"))
