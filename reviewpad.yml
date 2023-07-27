@@ -14,14 +14,17 @@ groups:
 workflows:
   - name: Auto-approval and Merge Policy
     run:
-      - if: '$isElementOf($author(), $group("principal-engineers"))'
-        then: $approve("This PR is automatically approved as it was created by a principal engineer.")
+      # - if: '$isElementOf($author(), $group("principal-engineers"))'
+      #   then: $approve("This PR is automatically approved as it was created by a principal engineer.")
 
-      - if: '$all($filesPath(), ($fp : String => $any($group("low-risk-filepaths"), ($pat : String => $matchString($pat, $fp)))))'
+      - if: '$any($group("low-risk-filepaths"), ($pat: String => $hasFilePattern($pat)))'
         then: $approve("This PR has been automatically approved as it only modifies low risk files.")
 
-      - if: $isElementOf($author(), $group("trusted-bots"))
-        then:
-          - $approve($sprintf("This PR is automatically approved as it was created by trustable bot %s.", [$author()]))
-          - if: '$all($group("mandatory-checks"), ($check : String => $checkRunConclusion($check) == "success"))'
-            then: $merge()
+      # - if: '$all($filesPath(), ($fp: String => $any($group("low-risk-filepaths"), ($pat: String => $matchString($pat, $fp)))))'
+      #   then: $approve("This PR has been automatically approved as it only modifies low risk files.")
+
+      # - if: $isElementOf($author(), $group("trusted-bots"))
+      #   then:
+      #     - $approve($sprintf("This PR is automatically approved as it was created by trustable bot %s.", [$author()]))
+      #     - if: '$all($group("mandatory-checks"), ($check : String => $checkRunConclusion($check) == "success"))'
+      #       then: $merge()
